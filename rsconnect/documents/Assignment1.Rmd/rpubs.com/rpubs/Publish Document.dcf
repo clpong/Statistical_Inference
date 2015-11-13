@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/125642/6bdaa06561684ae689203182c38da976
+url: http://rpubs.com/clpong/125642
+when: 1447435758.54088

@@ -1,0 +1,62 @@
+---
+title: Statistical Inference Course Project
+author: "by clpong"
+date: "Friday, 13th November, 2015"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: united
+    highlight: tango
+---
+
+#  Project Description 
+
+This project uses ToothGrowth data. The dataset has three columns, namely, *len*, *supp*, and *dose*. *len* represents the length of tooth while *supp* denotes the supplements treated to the sample. *dose* represents the different dose given in the experiment.
+
+#  Load ToothGrowth dataset and some basic exploratory data analyses 
+
+***First 10 rows in ToothGrowth dataset***
+
+```{r}
+head(ToothGrowth,10)
+```
+
+***Summary of ToothGrowth dataset***
+```{r}
+summary(ToothGrowth)
+```
+
+***Comparison of the mean for tooth length based on two types of supplements***
+
+```{r}
+library(ggplot2)
+library(data.table)
+
+dt<-data.table(ToothGrowth)
+dt.mean <- dt[,mean(len),by=supp]
+ggplot(dt.mean,aes(x=supp, y=V1,fill=supp)) + geom_bar(stat="identity") + labs(x="Supplement",y="Mean", title="Comparison of mean for two supplements", fill="Supplement") + theme_bw()
+ 
+```
+
+#  t-test for comparing two different types of supplements on growth length
+
+The assumption is that the supplements are independent of each other.
+The formula has **len~supp** because len is numeric while supp is factor.
+
+```{r}
+t.test(len ~ supp, data = ToothGrowth)
+```
+
+**Conclusion**   
+p-value > 0.05, therefore suggesting that there is no statistically significant difference in ***len*** given the two different groups OJ and VC.
+
+#  t-test for comparing different types of doses on growth length
+
+This type of t-test is independent 2-group t-test, with the assumption that two types of doses have no relation or dependency between them.
+```{r}
+t.test(ToothGrowth$len,ToothGrowth$dose)
+```
+
+**Conclusion**     
+p-value < 0.05, therefore suggesting that is a statistically significant difference between the types of doses in growth length.
